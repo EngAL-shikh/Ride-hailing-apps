@@ -12,11 +12,11 @@ An integrated smart ride-hailing and courier delivery platform, specifically tai
 
 ### 👇 اختر لغة القراءة / Choose Your Language 👇
 
-[![العربية](https://img.shields.io/badge/اقرأ_بالعربية-العربية-0052CC?style=for-the-badge&logo=gitbook&logoColor=white)](#-النسخة-العربية)
+[![Arabic Version](https://img.shields.io/badge/Language-Arabic_Version-0052CC?style=for-the-badge&logo=gitbook&logoColor=white)](#-النسخة-العربية)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![English](https://img.shields.io/badge/Read_in_English-English-059669?style=for-the-badge&logo=gitbook&logoColor=white)](#-english-version)
+[![English Version](https://img.shields.io/badge/Language-English_Version-059669?style=for-the-badge&logo=gitbook&logoColor=white)](#-english-version)
 
----
+*(اضغط على أحد الأزرار أعلاه للانتقال السريع للغة المطلوبة / Click one of the buttons above to navigate directly)*
 
 </div>
 
