@@ -1,0 +1,75 @@
+name: Deploy Laravel Backend to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, json, zip
+          
+      - name: Deploy via SSH (Super Robust Sync)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "🚀 Starting Super Robust Deployment..."
+            cd ${{ secrets.DEPLOY_PATH }}
+            
+            # 1. Ensure it's a Git repo
+            if [ ! -d ".git" ]; then
+              echo "⚠️ Git repo not found, initializing..."
+              git init
+              git remote add origin https://github.com/EngAL-shikh/mashoar.git
+            fi
+            
+            # 2. Ensure origin is correct
+            git remote set-url origin https://github.com/EngAL-shikh/mashoar.git
+            
+            # 3. Force Sync
+            echo "📥 Fetching newest code from GitHub..."
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # 4. Permissions
+            echo "🔐 Setting permissions..."
+            chmod -R 755 storage bootstrap/cache || true
+            
+            # 5. Composer & Cache
+            echo "🧹 Cleaning and Updating..."
+            php artisan cache:clear || true
+            php artisan config:clear || true
+            php artisan route:clear || true
+            php artisan view:clear || true
+            
+            # 6. Database
+            if [ -f ".env" ]; then
+              echo "🗄️ Running migrations..."
+              php artisan migrate --force
+            fi
+            
+            echo "✅ Deployment Successful!"
+            
+      - name: Notify Deployment Status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment failed!"
+          fi

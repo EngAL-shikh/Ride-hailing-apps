@@ -1,0 +1,56 @@
+MotoYemen/Mashoar Detailed Execution Master PlanThis document serves as the Single Source of Truth for the AI Agent. If you get lost or need context, refer back to this specific step-by-step guide.0. Pre-requisites & ContextRoot Directory: C:\xampp\htdocs\mashoar\Repositories:Backend: https://github.com/EngAL-shikh/mashoar.git (Target Folder: mashoar_backend)App: https://github.com/EngAL-shikh/mashoar_app.git (Target Folder: mashoar_app)Project Management: Notion Page "MASHOAR APP" (Checklist Mode).1. Notion Initialization (Step A)Action: You must populate the Notion page with the following granular checklist. Do not summarize; use these exact items.Notion Checklist Content:Phase 1: Foundation & DevOps[ ] Repo Setup: Clone both repos, setup main & develop branches.[ ] Rules: Create .cursorrules in root of both projects.[ ] Laravel: Install v11, setup Sanctum, Config Custom Storage Disk.[ ] Flutter: Verify GetX structure, install dependencies (maps, firebase).Phase 2: Backend Core[ ] DB Connection: Ask user for credentials & Update .env.[ ] Migrations: Users, Driver_Profiles (Spatial), Trips, Settings, UI_Layouts.[ ] API: Auth (OTP), Driver Pulse.Phase 3: Business Logic[ ] Service: DriverDiscovery (ST_Distance_Sphere).[ ] Service: Trip (Bidding + Commission/Debt Logic).[ ] Service: Layout (SDUI with Cache::remember).Phase 4: Frontend Implementation[ ] Module: Auth (Login/OTP).[ ] Module: Home (SDUI Parser/WidgetFactory).[ ] Module: Ride (Driver Details, Request Flow).Phase 5: Realtime & Web[ ] Firebase: Configure FCM & Realtime DB keys.[ ] Web: Create tracking.blade.php for shared links.2. Environment & Repository Setup (Step B)Action: Execute these commands in your terminal to ensure clean separation.Backend Repo Setupcd C:\xampp\htdocs\mashoar
+# Ensure directory is empty or safe to write
+git clone [https://github.com/EngAL-shikh/mashoar.git](https://github.com/EngAL-shikh/mashoar.git) mashoar_backend
+cd mashoar_backend
+git checkout -b develop
+git checkout -b feature/phase1-setup
+Frontend Repo Setupcd ..
+git clone [https://github.com/EngAL-shikh/mashoar_app.git](https://github.com/EngAL-shikh/mashoar_app.git) mashoar_app
+cd mashoar_app
+git checkout -b develop
+git checkout -b feature/phase1-setup
+3. Enforce Rules (Step C)Action: Create a file named .cursorrules in the root of BOTH mashoar_backend and mashoar_app with this exact content:# CURSOR BEHAVIORAL & TECHNICAL RULES (STRICT ENFORCEMENT)
+
+## 1. BEHAVIORAL & WORKFLOW
+* **NO META-DOCS:** ABSOLUTELY FORBIDDEN to create markdown files (e.g., `plan.md`). Go straight to code.
+* **DIRECT EXECUTION:** Create/Edit `.php`, `.dart`, `.yaml` files immediately.
+* **NOTION MCP:**
+  1. Check Notion `[To Do]`.
+  2. Execute Task.
+  3. Mark `[Done]`.
+* **FIREBASE CONFIG:** ALWAYS use configuration data from `@firebaseFiles` folder.
+
+## 2. SDUI DISCIPLINE (CRITICAL)
+* **GOLDEN RULE:** Edit Backend JSON Schema first -> Then update Flutter WidgetFactory.
+* **CACHE:** Use `Cache::remember` for layouts.
+
+## 3. BACKEND ARCHITECTURE
+* **Hosting Safe:** Custom Storage Disk (No symlinks).
+* **Clean Code:** Service/Repository pattern. No logic in Controllers.
+
+## 4. FRONTEND ARCHITECTURE
+* **Pattern:** Modular Feature-First GetX.
+* **Localization:** Use `Text('key'.tr)`.
+
+## 5. LANGUAGE
+* **Code Comments:** English.
+* **Chat Responses:** Arabic (Concise).
+4. Backend Implementation Details (Step D & E)4.1 Laravel InstallationInside mashoar_backend/:composer create-project laravel/laravel .
+php artisan install:api  # Installs Sanctum & API routes
+4.2 Storage Config (Shared Hosting Fix)Critical for hPanel: Modify config/filesystems.php. Add this to the disks array:'public_uploads' => [
+    'driver' => 'local',
+    'root' => public_path('uploads'), // Points directly to public/uploads
+    'url' => env('APP_URL').'/uploads',
+    'visibility' => 'public',
+    'throw' => false,
+],
+4.3 Database Connection (User Pause)STOP: Do not run migrations yet.Prompt the User: "Please create an empty database in phpMyAdmin and provide DB_DATABASE, DB_USERNAME, DB_PASSWORD."Action: Update .env with provided credentials.Only then: Run php artisan migrate.5. Frontend Implementation Details (Step F)5.1 DependenciesInside mashoar_app/:flutter pub add get get_storage google_maps_flutter geolocator firebase_core firebase_messaging firebase_database http intl flutter_localizations
+5.2 Folder Structure VerificationEnsure lib/app/modules/ follows the feature-first pattern:lib/app/modules/
+  ├── home/
+  │   ├── bindings/
+  │   ├── controllers/
+  │   ├── views/
+  │   └── widgets/ (WidgetFactory here)
+  ├── auth/
+  └── ride/
+5.3 LocalizationEnsure lib/app/translations/ar.json exists and is wired up in GetMaterialApp inside main.dart.6. Closing the Loop (Step G)For every task completed from the Notion list:Commit: git commit -m "feat: <task name>"Push: git push origin feature/phase1-setup (or current feature branch).Notion: Update the specific checkbox to checked [x].

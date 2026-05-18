@@ -1,0 +1,44 @@
+# Laravel
+mashoar_backend/vendor/
+mashoar_backend/node_modules/
+mashoar_backend/.env
+mashoar_backend/.env.backup
+mashoar_backend/.phpunit.result.cache
+mashoar_backend/storage/*.key
+mashoar_backend/storage/logs/*
+mashoar_backend/storage/framework/cache/*
+mashoar_backend/storage/framework/sessions/*
+mashoar_backend/storage/framework/views/*
+mashoar_backend/bootstrap/cache/*
+
+# Flutter
+mashoar_app/.dart_tool/
+mashoar_app/.flutter-plugins
+mashoar_app/.flutter-plugins-dependencies
+mashoar_app/.packages
+mashoar_app/.pub-cache/
+mashoar_app/.pub/
+mashoar_app/build/
+mashoar_app/ios/Pods/
+mashoar_app/ios/.symlinks/
+mashoar_app/android/.gradle/
+mashoar_app/android/app/build/
+
+# Firebase
+mashoar_app/android/app/google-services.json
+mashoar_app/ios/Runner/GoogleService-Info.plist
+
+# Firebase secrets (never commit)
+firbaseFiles/
+mashoar_backend/firebase-credentials.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

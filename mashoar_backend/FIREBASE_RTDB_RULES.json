@@ -1,0 +1,43 @@
+{
+  "rules": {
+    "trips": {
+      ".read": true,
+      ".write": true,
+      "$tripId": {
+        ".read": true,
+        ".write": true,
+        "driver_loc": {
+          ".write": true,
+          ".read": true,
+          "lat": {
+            ".validate": "newData.isNumber() && newData.val() >= -90 && newData.val() <= 90"
+          },
+          "lng": {
+            ".validate": "newData.isNumber() && newData.val() >= -180 && newData.val() <= 180"
+          },
+          "heading": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 360"
+          },
+          "speed": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "ts": {
+            ".validate": "newData.isNumber() || (newData.hasChildren() && newData.child('.sv').val() == 'timestamp')"
+          }
+        },
+        "bids": {
+          ".read": true,
+          ".write": true
+        }
+      },
+      "available": {
+        ".read": true,
+        ".write": true,
+        "$tripId": {
+          ".read": true,
+          ".write": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+# CURSOR RULES
+1. **NO META-DOCS:** Do not create `plan.md` or `summary.md`. Go straight to code.
+2. **NOTION FIRST:** Always check Notion before coding. Update Notion after coding.
+3. **HOSTING SAFE:** Use Caching for SDUI. Use Custom Storage Disk for uploads.
+4. **ARABIC CHAT:** Respond in Arabic. Code comments in English.
+
